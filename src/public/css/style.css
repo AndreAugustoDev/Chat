@@ -552,16 +552,30 @@ video {
   display: flex;
 }
 
+.h-14 {
+  height: 3.5rem;
+}
+
 .flex-grow {
   flex-grow: 1;
 }
 
-.place-content-center {
-  place-content: center;
-}
-
 .border {
   border-width: 1px;
+}
+
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+.from-cyan-500 {
+  --tw-gradient-from: #06b6d4 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(6 182 212 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-blue-500 {
+  --tw-gradient-to: #3b82f6 var(--tw-gradient-to-position);
 }
 
 .outline {
@@ -583,32 +597,5 @@ video {
 }
 
 body {
-  padding: 0;
-  overflow: hidden;
-  background: url('/imgs/bg.jpg') no-repeat center center fixed;
-  background-size: 100% 100%;
-  place-content: center;
-  justify-content: center;
-}
-
-.box {
-  background-color: rgba(0, 0, 0, 0.342);
-  display: flex;
-  justify-content: center;
-}
-
-input[type=submit] {
-  background-color: #21252975;
-  color: white;
-}
-
-input[type=submit]:hover {
-  transition: 0.5s;
-  background-color: #7c7c7c86;
-  color: #000000;
-}
-
-input[type=text],
-input[type=password] {
-  border-radius: 5px;
+  background-color: black;
 }

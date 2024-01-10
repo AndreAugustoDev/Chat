@@ -1,4 +1,5 @@
 import express, { Application } from "express";
+import fs from "fs";
 import http from "http";
 import { Server } from "socket.io";
 
@@ -26,8 +27,8 @@ class App {
 
 	listenSocket() {
 		this.io.on("connection", (socket) => {
-			console.log("user connected =>", socket.id);
-
+			// console.log("user connected =>", socket.id);
+			fs;
 			socket.on("message", (msg) => {
 				this.io.emit("message", msg);
 			});

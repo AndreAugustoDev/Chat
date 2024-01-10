@@ -1,89 +1,130 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Socket.IO chat</title>
-    <style>
-      :root {
-        color-scheme: dark;
-      }
 
-      body {
-        margin: 0;
-        padding-bottom: 3rem;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-          Helvetica, Arial, sans-serif;
-      }
+<head>
+  <title>Chat</title>
+  <style>
+    :root {
+      color-scheme: dark;
+    }
 
-      #form {
-        background: rgba(0, 0, 0, 0.15);
-        padding: 0.25rem;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        height: 3rem;
-        box-sizing: border-box;
-        backdrop-filter: blur(10px);
-      }
-      #input {
-        border: none;
-        padding: 0 1rem;
-        flex-grow: 1;
-        border-radius: 2rem;
-        margin: 0.25rem;
-      }
-      #input:focus {
-        outline: none;
-      }
-      #form > button {
-        background: #333;
-        border: none;
-        padding: 0 1rem;
-        margin: 0.25rem;
-        border-radius: 3px;
-        outline: none;
-        color: #fff;
-      }
+    body {
+      margin: 0;
+      padding-bottom: 3rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Helvetica, Arial, sans-serif;
+    }
 
-      #messages {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-      #messages > li {
-        padding: 0.5rem 1rem;
-      }
-      #messages > li:nth-child(odd) {
-        background: #495057;
-      }
-    </style>
-  </head>
-  <body>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
+    #form {
+      background: rgba(0, 0, 0, 0.15);
+      padding: 0.25rem;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      height: 3rem;
+      box-sizing: border-box;
+      backdrop-filter: blur(10px);
+    }
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script>  
-      var socket = io();
-      const message = document.getElementById('messages')
-      const input = document.getElementById('input')
-      
-      document.addEventListener('submit', (e) => {
-        e.preventDefault()
-        if(input.value) {
-          socket.emit('message', input.value)
-        }
-      })
+    #input {
+      border: none;
+      padding: 0 1rem;
+      flex-grow: 1;
+      border-radius: 2rem;
+      margin: 0.25rem;
+    }
 
-      socket.on('message', (msg)=>{
-        const li = document.createElement('li')
-        li.textContent = msg
-        message.appendChild(li)
-      })
+    #input:focus {
+      outline: none;
+    }
 
-    </script>
-  </body>
+    #form>button {
+      background: #333;
+      border: none;
+      padding: 0 1rem;
+      margin: 0.25rem;
+      border-radius: 3px;
+      outline: none;
+      color: #fff;
+    }
+
+    #messages {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #messages>li {
+      padding: 0.5rem 1rem;
+    }
+
+    #messages>li:nth-child(odd) {
+      background: #495057;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="javascript: document.body.scrollIntoView(false)" class="float">
+    <i class="float iconify-inline" data-icon="fe:arrow-down"></i><br />
+  </a>
+
+  <style>
+    .float {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      bottom: 60px;
+      right: 40px;
+      background-color: rgb(122, 122, 122);
+      color: #FFF;
+      border-radius: 50px;
+      text-align: center;
+      box-shadow: 2px 2px 3px #999;
+    }
+  </style>
+
+  <ul id="messages"></ul>
+  <form id="form" action="">
+    <input id="input" autocomplete="off" maxlength="150" /><button>Send</button>
+    <input onchange={selectedFile} type="file">
+  </form>
+
+
+
+  <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var ringtone = new Audio('https://pt.itunemachine.com/audio/samsung-s9-skyline-ringtone-171.mp3');
+    var socket = io();
+    const message = document.getElementById('messages')
+    const input = document.getElementById('input')
+
+    document.addEventListener('submit', (e) => {
+      e.preventDefault()
+      if (input.value) {
+        socket.emit('message', input.value)
+        input.value = null
+      }
+    })
+
+    socket.on('message', (msg) => {
+      const li = document.createElement('li');
+      const icon = document.createElement('i');
+
+      icon.className = 'iconify';
+      icon.setAttribute('data-icon', 'iconamoon:profile-circle');
+      icon.style.fontSize = '25px'
+      icon.style.verticalAlign = 'middle'
+      li.textContent = msg;
+      li.insertBefore(icon, li.firstChild);
+      message.appendChild(li);
+      ringtone.play();
+    });
+
+  </script>
+</body>
+
 </html>
